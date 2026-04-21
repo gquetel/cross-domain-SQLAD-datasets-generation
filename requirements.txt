@@ -1,0 +1,33 @@
+# Necessary for generation
+pandas==2.2.3
+numpy==2.2.5
+tqdm==4.67.1
+scikit-learn==1.6.1
+sqlparse==0.5.3
+matplotlib==3.10.1
+zstandard==0.25.0
+kaleido==1.2.0
+
+## Used for diversity evaluation:
+sqlglot==26.16.2
+vendi-score==0.0.3
+
+# Testing
+pytest==9.0.2  # Built-in subtests support
+
+# Used for notebooks
+ipykernel==6.29.5
+jupyter==1.1.1
+
+# Models
+accelerate==1.5.2
+evaluate==0.4.3
+torch==2.7.0
+transformers==5.3.0
+tokenizers==0.22.2
+plotly==6.3.1
+sentence-transformers==5.2.3
+## Word2Vec vectorizer
+gensim==4.4.0
+# CodeBERT
+protobuf==7.34.0
