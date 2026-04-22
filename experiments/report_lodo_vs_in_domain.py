@@ -706,7 +706,7 @@ def plot_all_models_tl_matrix(
         title=None,
         width=max(900, 380 * n),
         height=750,
-        margin=dict(b=100),
+        margin=dict(t=30, b=0, l=0, r=0),
         # font=dict(family="CMU Serif"),
     )
     return fig

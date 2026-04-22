@@ -443,7 +443,7 @@ def plot_scatter(means_df: pd.DataFrame, output_dir: Path):
         plot_bgcolor="white",
         width=900,
         height=750,
-        margin=dict(l=60, r=40, t=40, b=60),
+        margin=dict(l=0, r=0, t=0, b=0),
     )
     fig.update_xaxes(showgrid=True, gridcolor="#eeeeee")
     fig.update_yaxes(showgrid=True, gridcolor="#eeeeee")
