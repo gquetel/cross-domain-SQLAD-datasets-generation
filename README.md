@@ -2,7 +2,7 @@
 
 This repository contains the code used to generate high-quality SQL injection detection datasets for evaluating unsupervised detection systems. Samples are built using query templates filled with legitimate values (normal samples) and [sqlmap](https://github.com/sqlmapproject/sqlmap/tree/1.8.7)-generated payloads (attack samples).
 
-The generator ships **four application domains** out of the box:  **OurAirports** (aviation), **sakila** (DVD rental), **AdventureWorks** (bicycle-sales ERP) and **OHR** (human resources), and merges them into a single criss-domain dataset. The single-domain [Superviz25-SQL Dataset](https://zenodo.org/records/17086037), published at ANUBIS 2025, was generated with an earlier version of this codebase (see [Reproducing Superviz25-SQL](#reproducing-superviz25-sql)).
+The generator ships **four application domains** out of the box:  **OurAirports** (aviation), **sakila** (DVD rental), **AdventureWorks** (bicycle-sales ERP) and **OHR** (human resources), and merges them into a single criss-domain dataset. The single-domain [Superviz25-SQL Dataset](https://zenodo.org/records/17086037), published at ANUBIS 2025, was generated with an earlier version of this codebase at [sqlia-dataset-generator](https://github.com/gquetel/sqlia-dataset-generator).
 
 ## Dataset Generation Strategy
 
