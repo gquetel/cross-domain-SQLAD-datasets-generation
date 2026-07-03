@@ -1,0 +1,62 @@
+[project]
+name = "sqlia-dataset-generator"
+version = "1.0.0"
+description = "Generator for the Superviz26-SQL SQL injection dataset."
+authors = [
+  { name = "gquetel", email = "gregor.quetel@telecom-paris.fr" },
+]
+readme = "README.md"
+keywords = ["SQL injection", "dataset", "security"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+]
+# torch 2.6.0 / transformers 4.51.3 only ship wheels up to CPython 3.13.
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  # Generation
+  "pandas==2.2.3",
+  "numpy==2.2.5",
+  "tqdm==4.67.1",
+  "scikit-learn==1.6.1",
+  "mysql-connector-python==9.3.0",
+  # Dataset analysis / diversity experiments. torch + transformers provide the
+  # SecureBERT embeddings used by experiments/diversity_metric.py; sqlglot/sqlparse
+  # back the parse-tree diversity metrics. Model training lives in mlops-sqldetect.
+  "matplotlib==3.10.1",
+  "torch==2.6.0",
+  "transformers==4.51.3",
+  "sqlglot==26.16.2",
+  "sqlparse==0.5.3",
+  "plotly==6.8.0",
+  "kaleido==1.3.0",
+  "umap-learn==0.5.7"
+]
+
+[dependency-groups]
+dev = [
+  # Testing
+  "pytest==9.0.2", # Built-in subtests support
+  "toml",          # used by tests to read config fixtures
+  # Notebooks
+  "ipykernel==6.29.5",
+  "jupyter==1.1.1",
+  "matplotlib-venn==1.1.2",
+]
+
+# This repository is run as an application (scripts import `from src.<module>`
+# with the repo root on sys.path); it is not built/installed as a package.
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-v --strict-markers --tb=short --color=yes"
+markers = [
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "integration: marks tests as integration tests",
+  "unit: marks tests as unit tests",
+]
