@@ -1,18 +1,27 @@
-# SQL Injection Detection Dataset Generator
+# ADAPT
 
-This repository contains the code used to generate high-quality SQL injection detection datasets for evaluating unsupervised detection systems. Samples are built using query templates filled with legitimate values (normal samples) and [sqlmap](https://github.com/sqlmapproject/sqlmap/tree/1.8.7)-generated payloads (attack samples).
+**ADAPT** (**A**utomated **D**ataset generator from **A**pplication **P**roject **T**emplates) generates high-quality SQL attack detection datasets for evaluating unsupervised detection systems. Samples are built using query templates filled with legitimate values (normal samples) and [sqlmap](https://github.com/sqlmapproject/sqlmap/tree/1.8.7)-generated payloads (attack samples).
 
-The generator ships **four application domains** out of the box:  **OurAirports** (aviation), **sakila** (DVD rental), **AdventureWorks** (bicycle-sales ERP) and **OHR** (human resources), and merges them into a single criss-domain dataset. The single-domain [Superviz25-SQL Dataset](https://zenodo.org/records/17086037), published at ANUBIS 2025, was generated with an earlier version of this codebase at [sqlia-dataset-generator](https://github.com/gquetel/sqlia-dataset-generator).
+The generator ships **four application domains** out of the box: **OurAirports** (aviation), **sakila** (DVD rental), **AdventureWorks** (bicycle-sales ERP) and **OHR** (human resources). Together, they form [Superviz26-SQL](https://zenodo.org/records/19627322), a cross-domain dataset designed to evaluate how SQL injection detectors transfer across application domains. The single-domain [Superviz25-SQL Dataset](https://zenodo.org/records/17086037), published at ANUBIS 2025, was generated with an earlier version of this codebase at [sqlia-dataset-generator](https://github.com/gquetel/sqlia-dataset-generator).
 
-## Dataset Generation Strategy
+## How ADAPT Generates Datasets
 
 This generator creates realistic SQL injection detection datasets through controlled emulation of web application endpoints and database attacks. It produces labelled datasets suitable for training and evaluating unsupervised anomaly detection systems.
 
 <p align="center">
-  <img width="720" src="data/img/dataset-generation-process.png">
+  <a href="data/img/adapt-generation-process.pdf">
+    <img width="960" src="data/img/adapt-generation-process.png" alt="ADAPT dataset-generation workflow (Figure 3.3 of the thesis)">
+  </a>
 </p>
 
-The dataset generation relies on **query templates** filled with legitimate values for normal samples and sqlmap-generated payloads for attack samples. Templates are SQL queries with placeholders enclosed in curly brackets:
+ADAPT separates dataset construction into two phases:
+
+1. **Dataset design**: derive the database schema, query templates, and project-related wordlists from a source application project.
+2. **Automated generation**: fill template placeholders with legitimate values to produce normal queries, and drive sqlmap against simulated vulnerable endpoints to produce attacks. The resulting queries are executed or observed in an isolated MySQL testbed.
+
+This separation makes ADAPT schema-independent: adapting it to a new application domain requires supplying a project specification rather than modifying the generator.
+
+In both phases, **query templates** define the structure of generated samples. Templates are SQL queries with placeholders enclosed in curly brackets:
 
 ```sql
 SELECT * FROM airport WHERE icao_code = '{airports_icao_code}'
