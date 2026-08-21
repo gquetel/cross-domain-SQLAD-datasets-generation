@@ -288,7 +288,7 @@ TEX_FIGURE_CAPTION = (
     r"Top domain words per domain, ranked by frequency in each domain's in-domain benign "
     r"train queries, after removing the shared SQL protocol vocabulary (MySQL keywords and "
     r"built-in functions). Bar length is the token count; colours match the per-domain palette "
-    r"used throughout the paper."
+    r"used throughout the paper. SQL keywords are in \textit{italic}."
 )
 
 # Shared axis style for the four per-domain bar charts. Counts span tens of
@@ -314,10 +314,15 @@ LEXBAR_STYLE = (
     "  }"
 )
 
+_PROTOCOL_WORDS = {w.upper() for w in (mysql_keywords | mysql_functions)}
+
 
 def _tex_escape(word: str) -> str:
-    """Escape the only special character produced by the token pattern: the underscore."""
-    return word.replace("_", r"\_")
+    """Escape the underscore, and italicise the word if it is a SQL protocol token."""
+    escaped = word.replace("_", r"\_")
+    if word.upper() in _PROTOCOL_WORDS:
+        return f"\\textit{{{escaped}}}"
+    return escaped
 
 
 def _domain_subfigure(domain: str, words: list[tuple[str, int]], color_hex: str) -> str:
